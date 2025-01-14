@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Dynamic Import Demo
 
-## Getting Started
+Bu proje Next.js'de Dynamic Import ve Regular Import arasındaki farkları görsel olarak gösteren bir demo uygulamasıdır.
 
-First, run the development server:
+## Başlangıç
+
+Geliştirme sunucusunu başlatmak için:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo İçeriği
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Bu demo iki farklı import yöntemini karşılaştırır:
 
-## Learn More
+### Regular Import (Normal Import)
+- Komponent kodu ana bundle içinde yer alır
+- Sayfa yüklenirken tüm kod indirilir
+- Kullanılmasa bile başlangıçta yüklenir
+- İlk yükleme daha yavaş olabilir
 
-To learn more about Next.js, take a look at the following resources:
+### Dynamic Import (Dinamik Import)
+- Komponent kodu ayrı bir chunk olarak bölünür
+- Sadece ihtiyaç duyulduğunda indirilir
+- Başlangıç bundle boyutu küçüktür
+- İlk yükleme daha hızlıdır
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ne Zaman Hangisini Kullanmalı?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Dynamic Import şunlar için uygundur:
+- Büyük boyutlu komponentler (harita, grafik, editör)
+- Sadece bazı kullanıcıların göreceği özellikler
+- Modal/dialog içerikleri
+- Admin paneli gibi ana sayfada gerekmeyen bölümler
 
-## Deploy on Vercel
+Regular Import şunlar için uygundur:
+- Header, footer gibi her zaman görünen komponentler
+- Küçük boyutlu ve sık kullanılan komponentler
+- Sayfa açılır açılmaz gösterilmesi gereken içerikler
+- SEO için önemli olan bölümler
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Proje Yapısı
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/app/components/heavy-component.tsx` - Simüle edilmiş ağır yüklü komponent
+- `/app/dynamic-import-demo/page.tsx` - Demo sayfası
+- `/app/page.tsx` - Ana sayfa
+
+## Teknik Detaylar
+
+Demo'da gösterilen gecikmeler:
+1. Regular Import:
+   - Komponent kodu sayfa yüklenirken gelir
+   - İçerik yüklemesi 2 saniye sürer
+
+2. Dynamic Import:
+   - Komponent kodu butona tıklandığında yüklenmeye başlar (500ms)
+   - İçerik yüklemesi 2 saniye sürer
+
+## Öğrenme Kaynakları
+
+- [Next.js Dynamic Import Dokümantasyonu](https://nextjs.org/docs/advanced-features/dynamic-import)
+- [React Lazy Loading](https://react.dev/reference/react/lazy)
+- [Code Splitting Best Practices](https://nextjs.org/docs/app/building-your-application/optimizing/code-splitting)
